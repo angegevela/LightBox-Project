@@ -150,7 +150,7 @@ h2 {
     $dir_path = "uploads/";//my folder name under the project that my classmate do in the morning, I am also moving the folder uploads to this folder.
     $extensions_array = array('jpg', 'png', 'jpeg', 'gif'); // file extensions of the pictures passed by my classmate in my localhost.
     
-    if (is_dir($dir_path)) {
+    if (is_dir($dir_path)) {// file path of the picture, excuted by php code.
         $files = scandir($dir_path);
         $slideNumber = 1;
 
@@ -174,12 +174,12 @@ h2 {
   <span class="close" onclick="closeModal()">&times;</span>
   <div class="modal-content">
       <?php 
-      $slideNumber = 1;
+      $slideNumber = 1;//starting number when picture start to slide.
       foreach ($files as $file) {
           if ($file !== '.' && $file !== '..') {
               $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
-              if (in_array($file_ext, $extensions_array)) {
+              if (in_array($file_ext, $extensions_array)) {//array, in this part is the sequence of the pictures that will show in the interface part.
                   echo "<div class='mySlides'>";
                   echo "<div class='numbertext'>$slideNumber / " . (count($files) - 2) . "</div>";
                   echo "<img src='$dir_path$file' style='width:100%','height:50%'>";
@@ -189,9 +189,9 @@ h2 {
           }
       }
       ?>
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <!-- button to navigate the pictures-->
       <a class="next" onclick="plusSlides(1)">&#10095;</a>
-      <div class="caption-container">
+      <div class="caption-container"><!-- image number, which i inputted to see how many pictures are given to me.-->
         <p id="caption"></p>
       </div>
   </div>
