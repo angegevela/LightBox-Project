@@ -147,8 +147,8 @@ h2 {
 
 <div class="row">
     <?php 
-    $dir_path = "uploads/";
-    $extensions_array = array('jpg', 'png', 'jpeg', 'gif');
+    $dir_path = "uploads/";//my folder name under the project that my classmate do in the morning, I am also moving the folder uploads to this folder.
+    $extensions_array = array('jpg', 'png', 'jpeg', 'gif'); // file extensions of the pictures passed by my classmate in my localhost.
     
     if (is_dir($dir_path)) {
         $files = scandir($dir_path);
