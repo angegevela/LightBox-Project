@@ -17,20 +17,30 @@ h2 {
   color: #333;
 }
 
-.row > .column {
-  padding: 0 8px;
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
 }
 
 .column {
-  float: left;
-  width: 25%;
+  flex: 1 1 22%;
+  max-width: 22%;
+  padding: 8px;
+  margin: 10px;
+  transition: transform 0.2s;
 }
+
+.column img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
 
 /* The Modal (background) */
 .modal {
