@@ -11,6 +11,12 @@ body {
   box-sizing: border-box;
 }
 
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
 .row > .column {
   padding: 0 8px;
 }
@@ -144,7 +150,7 @@ img.hover-shadow {
 </style>
 <body>
 
-<h2 style="text-align:center">Lightbox</h2>
+<h2>Lightbox</h2>
 
 <div class="row">
   <div class="column">
