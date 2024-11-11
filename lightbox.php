@@ -41,45 +41,49 @@ h2 {
   transition: box-shadow 0.3s, transform 0.3s;
 }
 
+.column img:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+
 
 /* The Modal (background) */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
-  padding-top: 100px;
+  z-index: 300px;
+  padding-top: 50px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: hidden;
 }
 
 /* Modal Content */
 .modal-content {
   position: relative;
-  background-color: #fefefe;
   margin: auto;
-  padding: 0;
   width: 90%;
-  max-width: 1200px;
+  max-width: 500px;
+  animation: fadeIn 0.3s;
 }
 
-/* The Close Button */
+/* Close Button */
 .close {
-  color: white;
+  color: #aaa;
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 25px;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: bold;
+  transition: color 0.3s;
 }
 
-.close:hover,
-.close:focus {
-  color: #999;
-  text-decoration: none;
+.close:hover {
+  color: #f2f2f2;
   cursor: pointer;
 }
 
@@ -87,58 +91,39 @@ h2 {
   display: none;
 }
 
-.cursor {
-  cursor: pointer;
-}
-
-/* Next & previous buttons */
+/* Navigation Buttons */
 .prev,
 .next {
   cursor: pointer;
   position: absolute;
   top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -50px;
   color: white;
-  font-weight: bold;
   font-size: 20px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-  -webkit-user-select: none;
+  font-weight: bold;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  transition: background-color 0.3s;
 }
 
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover,
-.next:hover {
+.prev:hover, .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
+.prev {
+  left: 10px;
 }
 
-img {
-  margin-bottom: -4px;
+.next {
+  right: 10px;
 }
 
 .caption-container {
   text-align: center;
   background-color: black;
-  padding: 2px 16px;
+  padding: 10px 16px;
   color: white;
+  font-size: 16px;
 }
 
 .demo {
@@ -150,79 +135,68 @@ img {
   opacity: 1;
 }
 
-img.hover-shadow {
-  transition: 0.3s;
-}
-
-.hover-shadow:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>
 <body>
 
 <h2>Lightbox</h2>
 
+
 <div class="row">
-  <div class="column">
-    <img src="uploads/cow.gif" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
-  </div>
-  <div class="column">
-    <img src="uploads/picA.jpg" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
-  </div>
-  <div class="column">
-    <img src="uploads/th.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
-  </div>
-  <div class="column">
-    <img src="uploads/u.jpg" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
-  </div>
+    <?php 
+    $dir_path = "uploads/";
+    $extensions_array = array('jpg', 'png', 'jpeg', 'gif');
+    
+    if (is_dir($dir_path)) {
+        $files = scandir($dir_path);
+        $slideNumber = 1;
+
+        foreach ($files as $file) {
+            if ($file !== '.' && $file !== '..') {
+                $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+                if (in_array($file_ext, $extensions_array)) {
+                    echo "<div class='column'>";
+                    echo "<img class='demo cursor' src='$dir_path$file' onclick='openModal(); currentSlide($slideNumber)' alt='Image $slideNumber'>";
+                    echo "</div>";
+                    $slideNumber++;
+                }
+            }
+        }
+    }
+    ?>
 </div>
 
 <div id="myModal" class="modal">
-  <span class="close cursor" onclick="closeModal()">&times;</span>
+  <span class="close" onclick="closeModal()">&times;</span>
   <div class="modal-content">
+      <?php 
+      $slideNumber = 1;
+      foreach ($files as $file) {
+          if ($file !== '.' && $file !== '..') {
+              $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
-    <div class="mySlides">
-      <div class="numbertext">1 / 4</div>
-      <img src="uploads/cow.gif" style="width:100%">
-    </div>
-
-    <div class="mySlides">
-      <div class="numbertext">2 / 4</div>
-      <img src="uploads/picA.jpg" style="width:100%">
-    </div>
-
-    <div class="mySlides">
-      <div class="numbertext">3 / 4</div>
-      <img src="uploads/th.jpg" style="width:100%">
-    </div>
-    
-    <div class="mySlides">
-      <div class="numbertext">4 / 4</div>
-      <img src="uploads/u.jpg" style="width:100%">
-    </div>
-    
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-    <div class="caption-container">
-      <p id="caption"></p>
-    </div>
-
-
-    <div class="column">
-      <img class="demo cursor" src="uploads/cow.gif" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="uploads/picA.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snow">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="uploads/th.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="uploads/u.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-    </div>
+              if (in_array($file_ext, $extensions_array)) {
+                  echo "<div class='mySlides'>";
+                  echo "<div class='numbertext'>$slideNumber / " . (count($files) - 2) . "</div>";
+                  echo "<img src='$dir_path$file' style='width:100%','height:50%'>";
+                  echo "</div>";
+                  $slideNumber++;
+              }
+          }
+      }
+      ?>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <div class="caption-container">
+        <p id="caption"></p>
+      </div>
   </div>
 </div>
+
 
 <script>
 function openModal() {
